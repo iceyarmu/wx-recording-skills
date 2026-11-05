@@ -1,6 +1,6 @@
 # AI 录音笔核心组件库与代码范本 (Component Patterns)
 
-本组件库基于上游范本与用户提供的原版总结样本调整，采用原生 CSS / SVG / Vanilla JS。它描述可观察的版式，不代表微信内部实现。按内容选择组件，不必全部使用。基础变量和容器见移动安全 CSS；本文件样式放在其后。
+本组件库基于上游范本与用户提供的原版总结样本调整，采用原生 CSS / SVG / Vanilla JS。它描述可观察的版式，不代表微信内部实现。按内容选择组件，不必全部使用。代码中的占位文字、演示数据、节点数量和配色仅说明实现方法，须按当前材料替换，不构成输出要求。基础变量和容器见移动安全 CSS；本文件样式放在其后。
 
 ---
 
@@ -48,24 +48,24 @@ h1 { margin-top: 8px; font-size: clamp(26px, 6vw, 36px); line-height: 1.32; font
 
 ---
 
-## 三、 时间线与交涉节点 (Timeline)
+## 三、 时间线与状态节点 (Timeline)
 
-适用于沟通来回、流程推进、交涉反悔等场景。
+适用于具有明确时序或状态演变的材料；节点数量、状态标签和强调方式由内容决定。
 
 ```html
-<figure data-visual-id="progress-timeline" data-visual-title="交涉脉络示意" data-visual-type="时间线" data-visual-relation="各阶段口径与状态演变" data-visual-source="从录音引用的原话...">
+<figure data-visual-id="progress-timeline" data-visual-title="【事件或状态演变】" data-visual-type="时间线" data-visual-relation="【各阶段之间的关系】" data-visual-source="从录音引用的原话...">
   <ol class="timeline">
     <li>
-      <span class="step-tag tag-promise">初答应</span>
-      <p class="t">对方先表示<strong>没问题</strong>，套餐已定好，约定明日办理。</p>
+      <span class="step-tag tag-stage">【初始状态】</span>
+      <p class="t">【该阶段的事实、时间与<strong>关键条件</strong>】</p>
     </li>
-    <li class="flip">
-      <span class="step-tag tag-flip">突然改口</span>
-      <p class="t">随即改口无法按期办理，最快需要推迟至<strong>后天</strong>。</p>
+    <li class="change">
+      <span class="step-tag tag-change">【状态变化】</span>
+      <p class="t">【发生的变化及其<strong>适用范围</strong>】</p>
     </li>
     <li class="pending">
-      <span class="step-tag tag-open">未决</span>
-      <p class="t">现场应对：明天能办几张算几张，后续<strong>等待确认回复</strong>。</p>
+      <span class="step-tag tag-open">【后续状态】</span>
+      <p class="t">【材料支持的<strong>结果或待确认事项</strong>】</p>
     </li>
   </ol>
 </figure>
@@ -78,11 +78,11 @@ h1 { margin-top: 8px; font-size: clamp(26px, 6vw, 36px); line-height: 1.32; font
 .timeline li::before { content: ""; position: absolute; left: 6px; top: 8px; bottom: -2px; width: 2px; background: var(--card-border); }
 .timeline li:last-child::before { display: none; }
 .timeline li::after { content: ""; position: absolute; left: 1px; top: 5px; width: 12px; height: 12px; border-radius: 50%; background: var(--card-bg); border: 3px solid var(--accent); }
-.timeline li.flip::after { border-color: #c0392b; }
+.timeline li.change::after { border-color: #c0392b; }
 .timeline li.pending::after { border-color: #9a6b00; }
 .step-tag { display: inline-block; font-size: 11.5px; font-weight: 700; padding: 2px 8px; border-radius: 99px; margin-bottom: 4px; }
-.tag-promise { background: var(--accent-soft); color: var(--accent); }
-.tag-flip { background: rgba(192, 57, 43, 0.12); color: #c0392b; }
+.tag-stage { background: var(--accent-soft); color: var(--accent); }
+.tag-change { background: rgba(192, 57, 43, 0.12); color: #c0392b; }
 .tag-open { background: rgba(154, 107, 0, 0.12); color: #9a6b00; }
 .timeline .t { font-size: 14px; color: var(--text); }
 ```
@@ -91,20 +91,20 @@ h1 { margin-top: 8px; font-size: clamp(26px, 6vw, 36px); line-height: 1.32; font
 
 ## 四、 决策对比矩阵 (Comparison Matrix)
 
-适用于录音中提到两条思路/方案的优劣取舍。只有原文明示采用时才保留“本页采用”徽标；旧新机制比较优先使用后面的双流程范式。
+适用于录音中提到两条思路/方案的优劣取舍。只有原文明示采用时才添加“已选定”徽标；涉及流程差异时可参考后面的双流程范式。
 
 ```html
-<figure data-visual-id="approach-compare" data-visual-title="双轨方案取舍" data-visual-type="对照矩阵" data-visual-relation="方案 A 与方案 B 的策略权衡" data-visual-source="从录音引用的原话...">
+<figure data-visual-id="approach-compare" data-visual-title="【方案对比主题】" data-visual-type="对照矩阵" data-visual-relation="方案 A 与方案 B 的策略权衡" data-visual-source="从录音引用的原话...">
   <div class="tracks" data-grid>
     <div class="track track-a">
-      <div class="track-name">思路一 · 全量铺开</div>
-      <div class="track-main">试图满足所有非核心诉求，导致资源分散。</div>
-      <div class="track-sub">边际收益递减，耗时周期长。</div>
+      <div class="track-name">【方案 A】</div>
+      <div class="track-main">【方案 A 在共同维度下的特点】</div>
+      <div class="track-sub">【原文支持的条件或代价】</div>
     </div>
     <div class="track track-b">
-      <div class="track-name">思路二 · 聚焦核心 <span class="badge">本页采用</span></div>
-      <div class="track-main">锁定最核心主目标，其他席位灵活适配。</div>
-      <div class="track-sub">资源高度集约，见效最快。</div>
+      <div class="track-name">【方案 B】</div>
+      <div class="track-main">【方案 B 在共同维度下的特点】</div>
+      <div class="track-sub">【原文支持的条件或代价】</div>
     </div>
   </div>
 </figure>
@@ -126,13 +126,13 @@ h1 { margin-top: 8px; font-size: clamp(26px, 6vw, 36px); line-height: 1.32; font
 
 ## 五、 原生 JS 动态数据条形图 (Interactive Bar Chart)
 
-多个实体有多组可比较指标、切换确实有助于阅读时，才使用 Tab；单一维度优先静态图。此处展示交互逻辑，生成时必须先在 HTML 放入默认指标的完整静态内容，确保无 JS 也可读。缺失值不填零，空数据或最大值为零时不做除法。
+多个实体有多组可比较指标、切换确实有助于阅读时，才使用 Tab；单一维度优先静态图。此处仅展示非负数指标的交互逻辑，数字均为虚拟演示数据；生成时必须先在 HTML 放入默认指标的完整静态内容，确保无 JS 也可读。缺失值不填零，空数据或最大值为零时不做除法。
 
 ```html
 <figure data-visual-id="stat-chart" data-visual-title="核心指标量化对比" data-visual-type="可切换指标条形图" data-visual-relation="各实体指标对比与排序" data-visual-source="从录音引用的具体数值语句...">
   <div class="chart-box">
     <!-- 切换 Tab -->
-    <div class="mbtns" role="tablist">
+    <div class="mbtns" role="group" aria-label="指标选择">
       <button class="mbtn" data-m="指标A" aria-pressed="true">指标 A</button>
       <button class="mbtn" data-m="指标B" aria-pressed="false">指标 B</button>
     </div>
@@ -191,7 +191,7 @@ h1 { margin-top: 8px; font-size: clamp(26px, 6vw, 36px); line-height: 1.32; font
 
 ```html
 <div class="insight">
-  <strong>关键在复用：</strong>每个人的药不同，背后的设计与制造流程可以复用。
+  <strong>【关键点】：</strong>【材料支持、值得单独突出的理解或限制】
 </div>
 ```
 
@@ -225,7 +225,7 @@ h1 { margin-top: 8px; font-size: clamp(26px, 6vw, 36px); line-height: 1.32; font
 
 ## 八、 技术步骤与旧新对照流程
 
-技术步骤用箭头表达先后依赖，不套交涉时间线。旧新对照用上下两组流程，旧组中性、新组主题色。以下仅为结构示例；替换为输入中实际出现的步骤、数量及字面证据，不照抄医学结论。
+有先后依赖的步骤可以用箭头连接；流程对照应保持共同的比较维度。以下仅为结构示例，步骤、数量、方向和强调方式均由当前输入决定。
 
 ```html
 <figure data-visual-id="process" data-visual-title="处理流程" data-visual-type="流程图" data-visual-relation="输入经过处理得到结果" data-visual-source="【输入中的字面证据】">
@@ -287,44 +287,34 @@ blockquote cite { display: block; margin-top: 6px; font-size: 12.5px; font-style
 
 ## 十、 有含义的小图形（趣味细节）
 
-在核心图解里加 1–2 处局部小物件，让抽象概念更可感。以药物为例：旧路径中同色药丸表达重复生产，新路径中多色药丸表达各不相同。它们是图解内的辅助行，不额外开一张“装饰卡”。其他主题换成与内容相关的物件，不把药丸当成所有总结的通用装饰。
+让具象细节帮助读者识别对象、理解动作或记住区别。先确定图形承担的语义，再选择与本次内容相关的轮廓、纹理或简短动画；不规定物件种类与数量。
+
+- 同类对象保持一致的视觉语法，有意义的差异才改变形状、颜色或排列。
+- 图形放在相关内容附近，尺寸服从信息层级，避免独立堆放装饰卡片。
+- 示意数量不冒充统计数据，颜色不暗示未经材料支持的分类；含义同时用文字表达。
+- 纯装饰图形使用 `aria-hidden="true"`；承担信息的图形提供可读说明。
 
 ```html
-<!-- 放入对应流程节点内部；图形数量仅为示意，不代表患者或产品数量 -->
 <div class="micro-visual">
-  <span class="pill-row" aria-hidden="true"><i class="pill"></i><i class="pill"></i><i class="pill"></i><i class="pill"></i></span>
-  <small>同一种药，重复生产</small>
-</div>
-<div class="micro-visual">
-  <span class="pill-row varied" aria-hidden="true"><i class="pill"></i><i class="pill"></i><i class="pill"></i><i class="pill"></i><i class="pill"></i></span>
-  <small>不同的药，共用一套流程</small>
+  <!-- 在此绘制与当前主题相关的内联 SVG 或 CSS 图形 -->
+  <small>【图形帮助解释的关系】</small>
 </div>
 ```
 
 ```css
 .micro-visual { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 6px; }
 .micro-visual small { font-size: 11.5px; color: var(--muted); }
-.pill-row { display: inline-flex; align-items: center; gap: 5px; padding: 4px 0; }
-.pill { display: block; width: 18px; height: 8px; border-radius: 6px; background: var(--accent); transform: rotate(-24deg); }
-.varied .pill:nth-child(1) { background: #3b82f6; }
-.varied .pill:nth-child(2) { background: #d99a32; }
-.varied .pill:nth-child(3) { background: #d65a8a; }
-.varied .pill:nth-child(4) { background: #8b5cf6; }
-.varied .pill:nth-child(5) { background: #14b8a6; }
-@media (prefers-color-scheme: dark) { .varied .pill { filter: brightness(1.2); } }
 ```
-
-配色仅区分示意物件，不赋予颜色未经原文支持的药物类别；文字承担意义，不能只靠颜色传达信息。kicker 可配一个小型描边胶囊 SVG，保持装饰尺寸，避免将 512×512 分享封面直接显示为正文主图。
 
 ## 十一、 定性趋势的紧凑对照
 
-原文只有“很多年 / 可能几个月甚至几天”这类宽泛时间时，使用两行短对照，避免复用一整套“输入→处理→结果”的双流程，也不画暗示精确倍数的比例条。只在图注限定一次，正文不把图中文字再解释一遍。
+只有方向性描述、没有可比数值时，可使用紧凑的文字对照，不画暗示精确倍数的比例条。保留原文的条件和不确定性，避免正文重复图中文字。
 
 ```html
 <!-- 放在具备五项证据属性的 figure 内；替换为输入原话支持的标签和内容 -->
-<div class="trend-row"><span>过去</span><strong>很多年，持续推进</strong></div>
-<div class="trend-row is-new"><span>原文展望</span><strong>可能几个月，甚至几天</strong></div>
-<figcaption>原文的趋势性预测，非已验证周期或精确比例。</figcaption>
+<div class="trend-row"><span>【条件 A】</span><strong>【原文支持的定性描述】</strong></div>
+<div class="trend-row is-new"><span>【条件 B】</span><strong>【原文支持的定性描述】</strong></div>
+<figcaption>【理解对照所必需的条件或限定，无则省略】</figcaption>
 ```
 
 ```css
