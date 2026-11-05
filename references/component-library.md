@@ -283,3 +283,53 @@ figure { margin: 16px 0 2px; }
 blockquote { margin: 14px 0 12px; padding: 14px 16px; border-left: 3px solid var(--accent); border-radius: 0 10px 10px 0; background: var(--surface-2); font-size: 15.5px; font-weight: 700; line-height: 1.7; }
 blockquote cite { display: block; margin-top: 6px; font-size: 12.5px; font-style: normal; font-weight: 400; color: var(--muted); }
 ```
+
+
+## 十、 有含义的小图形（趣味细节）
+
+在核心图解里加 1–2 处局部小物件，让抽象概念更可感。以药物为例：旧路径中同色药丸表达重复生产，新路径中多色药丸表达各不相同。它们是图解内的辅助行，不额外开一张“装饰卡”。其他主题换成与内容相关的物件，不把药丸当成所有总结的通用装饰。
+
+```html
+<!-- 放入对应流程节点内部；图形数量仅为示意，不代表患者或产品数量 -->
+<div class="micro-visual">
+  <span class="pill-row" aria-hidden="true"><i class="pill"></i><i class="pill"></i><i class="pill"></i><i class="pill"></i></span>
+  <small>同一种药，重复生产</small>
+</div>
+<div class="micro-visual">
+  <span class="pill-row varied" aria-hidden="true"><i class="pill"></i><i class="pill"></i><i class="pill"></i><i class="pill"></i><i class="pill"></i></span>
+  <small>不同的药，共用一套流程</small>
+</div>
+```
+
+```css
+.micro-visual { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 6px; }
+.micro-visual small { font-size: 11.5px; color: var(--muted); }
+.pill-row { display: inline-flex; align-items: center; gap: 5px; padding: 4px 0; }
+.pill { display: block; width: 18px; height: 8px; border-radius: 6px; background: var(--accent); transform: rotate(-24deg); }
+.varied .pill:nth-child(1) { background: #3b82f6; }
+.varied .pill:nth-child(2) { background: #d99a32; }
+.varied .pill:nth-child(3) { background: #d65a8a; }
+.varied .pill:nth-child(4) { background: #8b5cf6; }
+.varied .pill:nth-child(5) { background: #14b8a6; }
+@media (prefers-color-scheme: dark) { .varied .pill { filter: brightness(1.2); } }
+```
+
+配色仅区分示意物件，不赋予颜色未经原文支持的药物类别；文字承担意义，不能只靠颜色传达信息。kicker 可配一个小型描边胶囊 SVG，保持装饰尺寸，避免将 512×512 分享封面直接显示为正文主图。
+
+## 十一、 定性趋势的紧凑对照
+
+原文只有“很多年 / 可能几个月甚至几天”这类宽泛时间时，使用两行短对照，避免复用一整套“输入→处理→结果”的双流程，也不画暗示精确倍数的比例条。只在图注限定一次，正文不把图中文字再解释一遍。
+
+```html
+<!-- 放在具备五项证据属性的 figure 内；替换为输入原话支持的标签和内容 -->
+<div class="trend-row"><span>过去</span><strong>很多年，持续推进</strong></div>
+<div class="trend-row is-new"><span>原文展望</span><strong>可能几个月，甚至几天</strong></div>
+<figcaption>原文的趋势性预测，非已验证周期或精确比例。</figcaption>
+```
+
+```css
+.trend-row { display: flex; gap: 12px; align-items: baseline; padding: 10px 12px; border-radius: 8px; background: var(--surface-2); font-size: 13px; }
+.trend-row + .trend-row { margin-top: 8px; }
+.trend-row > span { flex: 0 0 5em; color: var(--muted); }
+.trend-row.is-new { background: var(--accent-soft); color: var(--accent); }
+```
