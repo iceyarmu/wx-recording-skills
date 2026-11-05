@@ -23,7 +23,7 @@ metadata:
 ## 工作流程
 
 1. 读取输入，明确材料范围、表达目的与核心关系。
-2. 读取 [内容与风格规范](references/prompt-spec.md)，组织主线、章节与必要细节。
+2. 读取 [内容与风格规范](references/prompt-spec.md)，组织主线与信息层级，精简每个信息块，规划分组和色彩职责。
 3. 按语义选择表达方式，参考 [组件范本](references/component-library.md) 和 [移动安全样式](references/recording-agent-mobile-safety.css)。范本是实现参考，不是内容或版式配额。
 4. 输入涉及设计或方案取舍时，另读 [设计讨论规则](references/design-recap.md)。
 5. 生成并保存完整 HTML，检查内容忠实性，再在浏览器中验收视觉和交互。
@@ -42,7 +42,7 @@ metadata:
 - head 包含 charset、viewport、`content-status=substantive`、`artifact-kind=doc`；title 与正文主标题一致。
 - 嵌入 `<style id="recording-agent-mobile-safety">`；使用 CSS 变量和 `prefers-color-scheme: dark`。主题样式可覆盖基础样式，窄屏图表不得撑破页面。
 - 图表与机制示意用 figure 包裹，提供唯一的小写 kebab-case `data-visual-id`，以及 `data-visual-title`、`data-visual-type`、`data-visual-relation`、`data-visual-source`。
-- source 使用原始输入中支持图形关系的准确片段，并进行 HTML 转义；不拼造引文。示意假设就近说明，证据不足时缩小图解范围。
+- source 从原始输入截取能支持图形关系的短而完整的连续片段，并进行 HTML 转义；不在引文中删除语气词、合并句子或替换字形。示意假设就近说明，证据不足时缩小图解范围。
 - body 尾部包含 `<template id="share-cover">`，内置与本次主题相关的 512×512 SVG；不作为正文大幅封面显示。
 - 无 JavaScript 时主要内容仍可阅读。控件具备语义与键盘操作，动画兼顾减少动态效果偏好。
 

@@ -23,13 +23,43 @@ h1 { margin-top: 8px; font-size: clamp(26px, 6vw, 36px); line-height: 1.32; font
 
 ---
 
-## 二、 基础容器卡片 (Card Section)
+## 二、 信息分组与容器 (Content Groups)
+
+按内容选择层级：分部统领主题，小节卡片回答具体问题，图解包围框组合相关节点与说明。短文可直接使用小节卡片。下列骨架展示可选的嵌套关系，不规定每节都有图；需要证据属性的 figure 见后面的完整范本。
+
+```html
+<section class="part" aria-labelledby="part-topic">
+  <header class="part-head">
+    <p class="part-label">【主题分类】</p>
+    <h2 id="part-topic">【分部主题】</h2>
+  </header>
+  <section class="card">
+    <h3>【本节结论或问题】</h3>
+    <p>【必要背景或依据；图解中的信息不在此重复】</p>
+    <!-- 需要组合图解时，在此放入带证据属性的 figure.visual-frame：标题、节点、连线、控件、图注同框 -->
+  </section>
+  <!-- 同一分部内可继续放置相关小节；数量取决于内容 -->
+</section>
+```
+
+```css
+.part { margin-top: 36px; }
+.part-head { padding-bottom: 12px; border-bottom: 1px solid var(--card-border); }
+.part-label { font-size: 12px; font-weight: 700; color: var(--secondary); margin-bottom: 6px; }
+.part-head h2 { font-size: 22px; line-height: 1.4; }
+.card > h3 { font-size: 17px; line-height: 1.5; margin-bottom: 10px; }
+.visual-frame { padding: 16px; border: 1px solid var(--card-border); border-radius: 12px; background: var(--surface-2); }
+.visual-frame figcaption { font-size: 12.5px; line-height: 1.6; color: var(--muted); }
+@media (max-width: 560px) { .visual-frame { padding: 12px; } }
+```
+
+独立小节可以直接用以下卡片，不必添加分部：
 
 ```html
 <section class="card">
   <div class="sec-tag">01 · 章节主题</div>
   <h2>【具体、自然的章节标题】</h2>
-  <p class="lead">主旨阐述：<strong>关键要素</strong>的定义说明...</p>
+  <p class="lead">【先给<strong>关键事实</strong>，只补必要解释】</p>
   <!-- 模块内容 -->
 </section>
 ```
@@ -47,6 +77,18 @@ h1 { margin-top: 8px; font-size: clamp(26px, 6vw, 36px); line-height: 1.32; font
 ```
 
 ---
+
+### 可选的色彩角色
+
+基础样式提供主色、辅助色、提醒色与负向色的成组变量。按内容选用或覆盖；以下类名只示范如何把文字、底色和边线一起映射到同一角色，不要求每页全部使用。分类色不表示好坏，负向色不能仅因为“旧方案”就套用。
+
+```css
+.tone-secondary { --tone: var(--secondary); --tone-soft: var(--secondary-soft); --tone-border: var(--secondary-border); }
+.tone-caution { --tone: var(--caution); --tone-soft: var(--caution-soft); --tone-border: var(--caution-border); }
+.tone-negative { --tone: var(--negative); --tone-soft: var(--negative-soft); --tone-border: var(--negative-border); }
+.color-note { color: var(--tone, var(--accent)); background: var(--tone-soft, var(--accent-soft)); border-inline-start: 3px solid var(--tone-border, var(--accent-border)); padding: 8px 12px; border-radius: 8px; }
+.color-label { color: var(--tone, var(--accent)); background: var(--tone-soft, var(--accent-soft)); border: 1px solid var(--tone-border, var(--accent-border)); padding: 3px 9px; border-radius: 999px; font-size: 12px; }
+```
 
 ## 三、 时间线与状态节点 (Timeline)
 
@@ -114,8 +156,10 @@ h1 { margin-top: 8px; font-size: clamp(26px, 6vw, 36px); line-height: 1.32; font
 .tracks { display: grid; gap: 12px; margin-top: 14px; grid-template-columns: 1fr 1fr; }
 @media (max-width: 600px) { .tracks { grid-template-columns: 1fr; } }
 .track { border: 1px solid var(--card-border); border-radius: 12px; padding: 14px 15px; background: var(--card-bg); }
-.track-a { border-top: 3px solid var(--muted); }
-.track-b { border-top: 3px solid var(--accent); }
+.track-a { border-top: 3px solid var(--secondary); background: var(--secondary-soft); }
+.track-b { border-top: 3px solid var(--accent); background: var(--accent-soft); }
+.track-a .track-name { color: var(--secondary); }
+.track-b .track-name { color: var(--accent); }
 .track-name { font-size: 14px; font-weight: 750; display: flex; align-items: center; gap: 8px; }
 .badge { font-size: 11px; font-weight: 700; color: var(--on-accent); background: var(--accent); padding: 1px 8px; border-radius: 999px; }
 .track-main { margin-top: 8px; font-size: 13.5px; font-weight: 600; line-height: 1.5; }
@@ -244,6 +288,7 @@ h1 { margin-top: 8px; font-size: clamp(26px, 6vw, 36px); line-height: 1.32; font
 
 ```css
 figure { margin: 16px 0 2px; }
+/* 组合图解加 .visual-frame；单幅简单图按需使用，避免层层重框。 */
 .fig-title { margin-bottom: 10px; font-size: 12.5px; font-weight: 700; color: var(--muted); }
 .pipe { display: flex; align-items: stretch; gap: 8px; }
 .step { flex: 1; min-width: 0; padding: 12px; border: 1px solid var(--card-border); background: var(--surface-2); border-radius: 12px; }

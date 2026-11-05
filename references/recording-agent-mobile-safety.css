@@ -17,7 +17,17 @@
   --accent-strong: #08745c;
   --accent-soft: #e1f1eb;
   --accent-border: #9ccdbe;
-  --surface-2: #eaf2ee;
+  --surface-2: #f4f5f8;
+  /* 可选色彩角色：可按主题覆盖；不要求每页全部使用。 */
+  --secondary: #7051a3;
+  --secondary-soft: #f0ebf8;
+  --secondary-border: #cbbce3;
+  --caution: #8a5912;
+  --caution-soft: #fff3dd;
+  --caution-border: #e1c28c;
+  --negative: #b23f50;
+  --negative-soft: #fcecef;
+  --negative-border: #e4b2ba;
   --on-accent: #ffffff;
   --shadow: 0 1px 2px rgba(16,24,40,.04), 0 8px 24px -14px rgba(16,24,40,.12);
 }
@@ -35,7 +45,16 @@
     --accent-strong: #71dfbc;
     --accent-soft: #183329;
     --accent-border: #315d4f;
-    --surface-2: #182521;
+    --surface-2: #1c222b;
+    --secondary: #cbb2f2;
+    --secondary-soft: #2b233b;
+    --secondary-border: #5c487a;
+    --caution: #edc47e;
+    --caution-soft: #332a1d;
+    --caution-border: #6e5631;
+    --negative: #f1a5b1;
+    --negative-soft: #382329;
+    --negative-border: #77434d;
     --on-accent: #06251c;
     --shadow: 0 1px 2px rgba(0,0,0,.35);
   }
