@@ -1,23 +1,24 @@
 # AI 录音笔核心组件库与代码范本 (Component Patterns)
 
-本组件库直接逆向提炼自微信输入法 VoiceSummary 网页生成引擎，全部采用原生 CSS / SVG / Vanilla JS，无需任何外部依赖。
+本组件库基于上游范本与用户提供的原版总结样本调整，采用原生 CSS / SVG / Vanilla JS。它描述可观察的版式，不代表微信内部实现。按内容选择组件，不必全部使用。基础变量和容器见移动安全 CSS；本文件样式放在其后。
 
 ---
 
 ## 一、 顶部标题区 (Header)
 
 ```html
-<header>
+<header class="hero">
   <p class="kicker">分类领域 · 专题标签</p>
-  <h1>【结论先行的一句话标题】</h1>
-  <p class="sub">【导语：浓缩事件背景、核心矛盾或当前结论】</p>
+  <h1>【具体对象与核心变化】</h1>
+  <p class="sub">【导语：具体事件与值得关心的变化；必要限定就近注明】</p>
 </header>
 ```
 
 ```css
-.kicker { font-size: 12px; font-weight: 700; letter-spacing: .12em; color: var(--accent); text-transform: uppercase; }
-h1 { margin-top: 8px; font-size: clamp(22px, 5vw, 28px); line-height: 1.35; font-weight: 800; letter-spacing: -.01em; }
-.sub { margin-top: 10px; font-size: 14.5px; color: var(--muted); line-height: 1.6; }
+.hero { padding: 40px 0 4px; }
+.kicker { margin-bottom: 16px; font-size: 12.5px; font-weight: 700; letter-spacing: .12em; color: var(--accent); text-transform: uppercase; }
+h1 { margin-top: 8px; font-size: clamp(26px, 6vw, 36px); line-height: 1.32; font-weight: 800; letter-spacing: -.01em; }
+.sub { margin-top: 14px; font-size: 16px; color: var(--muted); line-height: 1.6; }
 ```
 
 ---
@@ -26,18 +27,23 @@ h1 { margin-top: 8px; font-size: clamp(22px, 5vw, 28px); line-height: 1.35; font
 
 ```html
 <section class="card">
-  <h2><span>01 核心模块标题</span><span class="idx">01</span></h2>
+  <div class="sec-tag">01 · 章节主题</div>
+  <h2>【具体、自然的章节标题】</h2>
   <p class="lead">主旨阐述：<strong>关键要素</strong>的定义说明...</p>
   <!-- 模块内容 -->
 </section>
 ```
 
 ```css
-.card { margin-top: 22px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 22px 20px 24px; box-shadow: var(--shadow); }
-.card h2 { display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 750; }
-.card h2::before { content: ""; flex: none; width: 4px; height: 16px; border-radius: 2px; background: var(--accent); }
-.card h2 .idx { margin-left: auto; font-size: 12px; font-weight: 700; color: var(--faint); }
-.lead { margin-top: 10px; font-size: 14.5px; color: var(--text); }
+.card { margin-top: 20px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 26px 24px; box-shadow: var(--shadow); }
+.sec-tag { display: inline-block; margin-bottom: 12px; padding: 3px 11px; border-radius: 999px; font-size: 12px; font-weight: 700; color: var(--accent); background: var(--accent-soft); }
+.card h2 { font-size: 19.5px; line-height: 1.4; font-weight: 800; margin-bottom: 10px; }
+.lead { font-size: 14.5px; color: var(--muted); line-height: 1.75; }
+.lead strong { color: var(--text); }
+@media (max-width: 560px) {
+  .hero { padding-top: 24px; }
+  .card { padding: 20px 16px; border-radius: 14px; margin-top: 16px; }
+}
 ```
 
 ---
@@ -85,7 +91,7 @@ h1 { margin-top: 8px; font-size: clamp(22px, 5vw, 28px); line-height: 1.35; font
 
 ## 四、 决策对比矩阵 (Comparison Matrix)
 
-适用于录音中提到两条思路/方案的优劣取舍。
+适用于录音中提到两条思路/方案的优劣取舍。只有原文明示采用时才保留“本页采用”徽标；旧新机制比较优先使用后面的双流程范式。
 
 ```html
 <figure data-visual-id="approach-compare" data-visual-title="双轨方案取舍" data-visual-type="对照矩阵" data-visual-relation="方案 A 与方案 B 的策略权衡" data-visual-source="从录音引用的原话...">
@@ -111,7 +117,7 @@ h1 { margin-top: 8px; font-size: clamp(22px, 5vw, 28px); line-height: 1.35; font
 .track-a { border-top: 3px solid var(--muted); }
 .track-b { border-top: 3px solid var(--accent); }
 .track-name { font-size: 14px; font-weight: 750; display: flex; align-items: center; gap: 8px; }
-.badge { font-size: 11px; font-weight: 700; color: #fff; background: var(--accent); padding: 1px 8px; border-radius: 999px; }
+.badge { font-size: 11px; font-weight: 700; color: var(--on-accent); background: var(--accent); padding: 1px 8px; border-radius: 999px; }
 .track-main { margin-top: 8px; font-size: 13.5px; font-weight: 600; line-height: 1.5; }
 .track-sub { margin-top: 4px; font-size: 12.5px; color: var(--muted); }
 ```
@@ -120,7 +126,7 @@ h1 { margin-top: 8px; font-size: clamp(22px, 5vw, 28px); line-height: 1.35; font
 
 ## 五、 原生 JS 动态数据条形图 (Interactive Bar Chart)
 
-当录音中口述了多个实体的一组指标数据时，采用原生纯 JS 实现 Tab 切换联动条形图。
+多个实体有多组可比较指标、切换确实有助于阅读时，才使用 Tab；单一维度优先静态图。此处展示交互逻辑，生成时必须先在 HTML 放入默认指标的完整静态内容，确保无 JS 也可读。缺失值不填零，空数据或最大值为零时不做除法。
 
 ```html
 <figure data-visual-id="stat-chart" data-visual-title="核心指标量化对比" data-visual-type="可切换指标条形图" data-visual-relation="各实体指标对比与排序" data-visual-source="从录音引用的具体数值语句...">
@@ -147,7 +153,7 @@ h1 { margin-top: 8px; font-size: clamp(22px, 5vw, 28px); line-height: 1.35; font
   var btns = Array.prototype.slice.call(document.querySelectorAll('.mbtn'));
   function render(m){
     var rows = DATA.filter(function(d){ return d.v[m] != null; }).sort(function(a,b){ return b.v[m] - a.v[m]; });
-    var max = rows.length ? rows[0].v[m] : 1;
+    var max = rows.length ? Math.max(1, rows[0].v[m]) : 1;
     chartEl.innerHTML = rows.map(function(d){
       var pct = (d.v[m] / max * 100).toFixed(1);
       return '<div class="crow" data-grid><span class="cname">' + d.name + '</span><span class="ctrack"><i class="bar ' + d.group + '" style="width:' + pct + '%"></i></span><span class="cval">' + d.v[m] + '</span></div>';
@@ -167,7 +173,7 @@ h1 { margin-top: 8px; font-size: clamp(22px, 5vw, 28px); line-height: 1.35; font
 ```css
 .mbtns { display: flex; gap: 8px; margin-bottom: 12px; }
 .mbtn { padding: 4px 12px; font-size: 12.5px; font-weight: 700; border-radius: 999px; border: 1px solid var(--card-border); background: var(--card-bg); color: var(--muted); cursor: pointer; }
-.mbtn[aria-pressed="true"] { background: var(--accent); color: #fff; border-color: var(--accent); }
+.mbtn[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
 .crows { display: flex; flex-direction: column; gap: 8px; }
 .crow { display: grid; grid-template-columns: 80px 1fr 50px; align-items: center; gap: 10px; font-size: 13px; }
 .cname { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -181,12 +187,11 @@ h1 { margin-top: 8px; font-size: clamp(22px, 5vw, 28px); line-height: 1.35; font
 
 ## 六、 洞察卡片 (Insight Box)
 
-每个核心小节底部的定调总结：
+按需使用的一句收束，不是每节标配。优先点明具体关键处，避免“洞察／底层根因”套话；新增分析才标注“分析”，原文未支持时不推断根因：
 
 ```html
 <div class="insight">
-  <span class="tag">洞察</span>
-  <strong>问题根源：</strong>需求本身不复杂，核心矛盾在于前置资质未核实，导致方案一改再改。
+  <strong>关键在复用：</strong>每个人的药不同，背后的设计与制造流程可以复用。
 </div>
 ```
 
@@ -215,4 +220,66 @@ h1 { margin-top: 8px; font-size: clamp(22px, 5vw, 28px); line-height: 1.35; font
     </g>
   </svg>
 </template>
+```
+
+
+## 八、 技术步骤与旧新对照流程
+
+技术步骤用箭头表达先后依赖，不套交涉时间线。旧新对照用上下两组流程，旧组中性、新组主题色。以下仅为结构示例；替换为输入中实际出现的步骤、数量及字面证据，不照抄医学结论。
+
+```html
+<figure data-visual-id="process" data-visual-title="处理流程" data-visual-type="流程图" data-visual-relation="输入经过处理得到结果" data-visual-source="【输入中的字面证据】">
+  <figcaption class="fig-title">【图解标题】</figcaption>
+  <div class="pipe">
+    <div class="step"><span class="step-no">1</span><strong>【动作】</strong><p>【一句解释】</p></div>
+    <span class="pipe-arrow" aria-hidden="true">→</span>
+    <div class="step"><span class="step-no">2</span><strong>【动作】</strong><p>【一句解释】</p></div>
+    <span class="pipe-arrow" aria-hidden="true">→</span>
+    <div class="step"><span class="step-no">3</span><strong>【结果】</strong><p>【一句解释】</p></div>
+  </div>
+</figure>
+```
+
+旧新比较时，在同一个 figure 内用两个 `.paradigm` 包裹各自的标题与 `.pipe`，新组添加 `.is-new`。步骤数量按材料调整，不必两组相等；箭头连接的是关系，不是装饰。
+
+```css
+figure { margin: 16px 0 2px; }
+.fig-title { margin-bottom: 10px; font-size: 12.5px; font-weight: 700; color: var(--muted); }
+.pipe { display: flex; align-items: stretch; gap: 8px; }
+.step { flex: 1; min-width: 0; padding: 12px; border: 1px solid var(--card-border); background: var(--surface-2); border-radius: 12px; }
+.step-no { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; margin-right: 6px; font-size: 12px; background: var(--accent); color: var(--on-accent); }
+.step strong { font-size: 14px; }
+.step p { margin-top: 6px; font-size: 12.5px; color: var(--muted); line-height: 1.65; }
+.pipe-arrow { flex: none; align-self: center; color: var(--accent); }
+.paradigm { padding: 14px 16px; border: 1px solid var(--card-border); border-radius: 12px; }
+.paradigm + .paradigm { margin-top: 10px; }
+.paradigm.is-new { background: var(--accent-soft); border-color: var(--accent-border); }
+.paradigm .pipe { margin-top: 10px; }
+.paradigm .step { background: var(--card-bg); }
+@media (max-width: 639px) {
+  .pipe { flex-direction: column; }
+  .pipe-arrow { transform: rotate(90deg); }
+}
+```
+
+## 九、 障碍清单与原话收尾
+
+障碍清单适合解释“为什么难”，可以与后面的解决流程前后呼应；不要因此重复同一段正文。它是文本清单，无须伪装成统计图。
+
+```html
+<div class="hurdles">
+  <div class="hurdle"><span class="h-no">1</span><p><strong>【动作短词】</strong>——【这一关为什么难】</p></div>
+  <div class="hurdle"><span class="h-no">2</span><p><strong>【动作短词】</strong>——【这一关为什么难】</p></div>
+</div>
+<!-- 有原话时才用引用块；来源不明时不要补造署名 -->
+<blockquote>【输入中的原话】<cite>【输入已给出的归属，可省略】</cite></blockquote>
+```
+
+```css
+.hurdles { margin-top: 14px; }
+.hurdle { display: flex; gap: 12px; align-items: flex-start; padding: 9px 0; font-size: 14.5px; }
+.hurdle + .hurdle { border-top: 1px dashed var(--card-border); }
+.h-no { flex: none; display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: var(--surface-2); color: var(--accent); font-weight: 800; }
+blockquote { margin: 14px 0 12px; padding: 14px 16px; border-left: 3px solid var(--accent); border-radius: 0 10px 10px 0; background: var(--surface-2); font-size: 15.5px; font-weight: 700; line-height: 1.7; }
+blockquote cite { display: block; margin-top: 6px; font-size: 12.5px; font-style: normal; font-weight: 400; color: var(--muted); }
 ```
